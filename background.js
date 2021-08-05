@@ -31,12 +31,11 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 });
 
 function setListeners( authSettings, hostUrls ) {
-  console.info("called");
   if (hostUrls) {
     chrome.webNavigation.onCommitted.addListener(
       function ({ url: currentUrl }) {
         var urlHost = new URL(currentUrl);
-        if (!currentUrl.match('authuser') && authSettings[urlHost.hostname]) {
+        if (!currentUrl.match('authuser') && authSettings[urlHost.hostname] && authSettings[urlHost.hostname] != "0") {
           chrome.tabs.query({ currentWindow: true, active: true },
             function (tabs) {
               const tab = tabs[0];

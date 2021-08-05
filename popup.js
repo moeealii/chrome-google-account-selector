@@ -49,10 +49,10 @@ function getCurrentTabUrl(callback) {
 
 
 /**
- * Gets the saved background color for url.
+ * Gets the saved account for url.
  *
- * @param {string} url URL whose background color is to be retrieved.
- * @param {function(string)} callback called with the saved background color for
+ * @param {string} url URL whose account is to be retrieved.
+ * @param {function(string)} callback called with the saved account for
  *     the given url on success, or a falsy value if no color is retrieved.
  */
 function getSavedAccount(url, callback) {
@@ -66,10 +66,10 @@ function getSavedAccount(url, callback) {
 }
 
 /**
- * Sets the given background color for url.
+ * Sets the given account for url.
  *
- * @param {string} url URL for which background color is to be saved.
- * @param {string} account The background color to be saved.
+ * @param {string} url URL for which account is to be saved.
+ * @param {string} account The account to be saved.
  */
 function saveAccount(url, account) {
   var items = {};
@@ -77,12 +77,12 @@ function saveAccount(url, account) {
   items[url] = account;
   // See https://developer.chrome.com/apps/storage#type-StorageArea. We omit the
   // optional callback since we don't need to perform any action once the
-  // background color is saved.
+  // account is saved.
   chrome.storage.sync.set(items);
 }
 
-// This extension loads the saved background color for the current tab if one
-// exists. The user can select a new background color from the dropdown for the
+// This extension loads the saved account for the current tab if one
+// exists. The user can select a new account from the dropdown for the
 // current page, and it will be saved as part of the extension's isolated
 // storage. The chrome.storage API is used for this purpose. This is different
 // from the window.localStorage API, which is synchronous and stores data bound
@@ -93,7 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
   getCurrentTabUrl((url) => {
     var dropdown = document.getElementById('dropdown');
 
-    // Load the saved background color for this page and modify the dropdown
+    // Load the saved account for this page and modify the dropdown
     // value, if needed.
     getSavedAccount(url, (account) => {
       if (account) {
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Ensure the background color is changed and saved when the dropdown
+    // Ensure the account is changed and saved when the dropdown
     // selection changes.
     dropdown.addEventListener('change', () => {
       saveAccount(url, dropdown.value);
